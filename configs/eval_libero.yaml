@@ -1,0 +1,9 @@
+# LIBERO closed-loop evaluation config.
+# TODO: fill in real values.
+task_suite: libero_spatial   # libero_spatial | libero_object | libero_goal | libero_10
+num_episodes: 50
+seeds: [0, 1, 2]
+max_steps: 520
+action_horizon: 10
+render: true
+video_out: results/rollouts

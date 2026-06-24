@@ -1,0 +1,24 @@
+[project]
+name = "pi0-action-expert-analysis"
+version = "0.0.1"
+description = "Representation-analysis toolbox for the openpi pi0 action expert."
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "Jingcheng Shi" }]
+dependencies = [
+    # openpi is vendored as a git submodule under third_party/openpi (pinned at c23745b).
+    # Install it in editable mode after `git submodule update --init`:
+    #   pip install -e third_party/openpi
+    "numpy",
+    "matplotlib",
+]
+
+[project.optional-dependencies]
+dev = ["pytest", "ruff"]
+
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["serving", "smoke_tests", "profiling", "sim", "transforms"]

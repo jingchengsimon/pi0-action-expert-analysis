@@ -1,0 +1,10 @@
+# Policy server / serving config.
+# TODO: fill in real values.
+policy:
+  checkpoint: null        # path or HF id of the pi0 checkpoint
+  model: pi0              # pi0 | pi0-fast | ...
+  device: cuda
+server:
+  host: 0.0.0.0
+  port: 8000
+  action_horizon: 10

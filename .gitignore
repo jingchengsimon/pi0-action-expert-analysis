@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+build/
+dist/
+.venv/
+venv/
+.python-version
+
+# Caches / tooling
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+.DS_Store
+
+# Experiment outputs (keep results/ tracked structure, ignore heavy artifacts)
+results/**/*.mp4
+results/**/*.mov
+results/**/*.pkl
+results/**/*.npz
+checkpoints/
+*.ckpt
+*.safetensors
+
+# Logs
+*.log
+wandb/
+outputs/
