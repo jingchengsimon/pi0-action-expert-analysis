@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --job-name=pi0_train
-#SBATCH --partition=gpu
+#SBATCH --partition=gpu-redhat
 #SBATCH --nodes=1
 #SBATCH --gres=gpu:1
 #SBATCH --cpus-per-task=8

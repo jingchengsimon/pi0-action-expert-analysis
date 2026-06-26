@@ -32,7 +32,7 @@ def _submit_job(
     script: str,
     job_name: str,
     *,
-    partition: str = "gpu",
+    partition: str = "gpu-redhat",
     gpu: int = 1,
     cpus: int = 8,
     mem: str = "48G",
