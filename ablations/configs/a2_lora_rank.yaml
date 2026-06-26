@@ -1,0 +1,43 @@
+# A2: LoRA rank ablation.
+# Test different LoRA ranks to find optimal low-rank configuration.
+
+name: a2_lora_rank
+description: >
+  Ablate LoRA rank for VLM and Action Expert.
+  Default: VLM rank=16, AE rank=32.
+  Tests: 8, 16, 32, 64 for each component independently.
+
+shared:
+  data_dir: data/libero_lerobot/libero_spatial
+  num_steps: 30000
+  batch_size: 32
+  eval_suites: [libero_spatial, libero_object]
+  config: pi0_libero_low_mem_finetune
+  cpus: 8
+  mem: 48G
+
+variants:
+  - id: rank_8_8
+    description: "VLM rank=8, AE rank=8"
+    lora_rank_vlm: 8
+    lora_rank_ae: 8
+
+  - id: rank_8_16
+    description: "VLM rank=8, AE rank=16"
+    lora_rank_vlm: 8
+    lora_rank_ae: 16
+
+  - id: rank_16_32
+    description: "VLM rank=16, AE rank=32 (default)"
+    lora_rank_vlm: 16
+    lora_rank_ae: 32
+
+  - id: rank_32_32
+    description: "VLM rank=32, AE rank=32"
+    lora_rank_vlm: 32
+    lora_rank_ae: 32
+
+  - id: rank_32_64
+    description: "VLM rank=32, AE rank=64"
+    lora_rank_vlm: 32
+    lora_rank_ae: 64

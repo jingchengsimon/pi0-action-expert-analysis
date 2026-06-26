@@ -1,0 +1,35 @@
+# A4: Flow matching steps ablation.
+# Test different Euler integration step counts.
+
+name: a4_flow_steps
+description: >
+  Ablate the number of flow matching denoising steps (Euler integration).
+  Default is 10 steps. Tests: 5, 10, 20, 50.
+  Trade-off: more steps → better action quality but higher latency.
+
+shared:
+  data_dir: data/libero_lerobot/libero_spatial
+  num_steps: 30000
+  batch_size: 32
+  eval_suites: [libero_spatial, libero_object]
+  config: pi0_libero_low_mem_finetune
+  cpus: 8
+  mem: 48G
+  skip_train: true  # Use the same trained model, only vary eval steps.
+
+variants:
+  - id: flow_5_steps
+    description: "5 Euler integration steps (fastest)"
+    num_steps_flow: 5
+
+  - id: flow_10_steps
+    description: "10 Euler integration steps (default)"
+    num_steps_flow: 10
+
+  - id: flow_20_steps
+    description: "20 Euler integration steps"
+    num_steps_flow: 20
+
+  - id: flow_50_steps
+    description: "50 Euler integration steps (highest quality)"
+    num_steps_flow: 50

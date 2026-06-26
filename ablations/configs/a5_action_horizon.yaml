@@ -1,0 +1,30 @@
+# A5: Action horizon ablation.
+# Test different action chunk sizes.
+
+name: a5_action_horizon
+description: >
+  Ablate the action prediction horizon (chunk size).
+  Default action_horizon=50. Tests: 10, 20, 50.
+  Larger horizon = more temporal context but higher memory and compute.
+
+shared:
+  data_dir: data/libero_lerobot/libero_spatial
+  num_steps: 30000
+  batch_size: 32
+  eval_suites: [libero_spatial]
+  config: pi0_libero_low_mem_finetune
+  cpus: 8
+  mem: 48G
+
+variants:
+  - id: horizon_10
+    description: "Action horizon = 10 (short chunks)"
+    action_horizon: 10
+
+  - id: horizon_20
+    description: "Action horizon = 20"
+    action_horizon: 20
+
+  - id: horizon_50
+    description: "Action horizon = 50 (default)"
+    action_horizon: 50

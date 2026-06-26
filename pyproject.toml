@@ -11,14 +11,31 @@ dependencies = [
     #   pip install -e third_party/openpi
     "numpy",
     "matplotlib",
+    "pyyaml",
+    "imageio[ffmpeg]",
+    "opencv-python",
+    "scipy",
 ]
 
 [project.optional-dependencies]
 dev = ["pytest", "ruff"]
+profiling = ["torch", "jax"]
+wandb = ["wandb"]
 
 [build-system]
 requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
-packages = ["serving", "smoke_tests", "profiling", "sim", "transforms"]
+packages = [
+    "serving",
+    "sim",
+    "eval_harness",
+    "transforms",
+    "smoke_tests",
+    "finetune",
+    "analysis",
+    "pipeline",
+    "profiling",
+    "ablations",
+]

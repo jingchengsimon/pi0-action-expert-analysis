@@ -1,0 +1,37 @@
+# A7: Model variant comparison.
+# Compare pi0, pi0-FAST, and pi0.5 model variants.
+
+name: a7_model_variant
+description: >
+  Compare different pi0 model variants on LIBERO tasks.
+  pi0: standard flow matching (10 steps).
+  pi0-FAST: discrete tokenization with FAST tokenizer.
+  pi0.5: improved architecture with larger action expert.
+
+shared:
+  data_dir: data/libero_lerobot/libero_spatial
+  num_steps: 30000
+  batch_size: 32
+  eval_suites: [libero_spatial, libero_object, libero_goal]
+  cpus: 8
+  mem: 48G
+
+variants:
+  - id: pi0_base
+    description: "pi0 base model (flow matching, 10 steps)"
+    config: pi0_libero_low_mem_finetune
+    lora_rank_vlm: 16
+    lora_rank_ae: 32
+
+  - id: pi0_fast
+    description: "pi0-FAST (discrete tokenization)"
+    config: pi0_fast_libero
+    lora_rank_vlm: 16
+    lora_rank_ae: 32
+
+  - id: pi05
+    description: "pi0.5 (improved architecture)"
+    config: pi05_libero
+    lora_rank_vlm: 16
+    lora_rank_ae: 32
+    mem: 64G

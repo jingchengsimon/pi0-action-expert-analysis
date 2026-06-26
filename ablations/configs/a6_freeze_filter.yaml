@@ -1,0 +1,42 @@
+# A6: Freeze filter ablation.
+# Test which components should be frozen during fine-tuning.
+
+name: a6_freeze_filter
+description: >
+  Ablate the freeze filter strategy during LoRA fine-tuning.
+  Tests different combinations of frozen components.
+
+shared:
+  data_dir: data/libero_lerobot/libero_spatial
+  num_steps: 30000
+  batch_size: 32
+  eval_suites: [libero_spatial, libero_object]
+  config: pi0_libero_low_mem_finetune
+  cpus: 8
+  mem: 48G
+
+variants:
+  - id: freeze_vlm
+    description: "Freeze entire VLM (PaliGemma), only train AE + LoRA"
+    freeze_filter: paligemma
+    lora_rank_vlm: 0
+    lora_rank_ae: 32
+
+  - id: freeze_ae
+    description: "Freeze entire AE, only train VLM LoRA"
+    freeze_filter: action_expert
+    lora_rank_vlm: 16
+    lora_rank_ae: 0
+
+  - id: full_finetune
+    description: "Full fine-tuning (no freezing, requires FSDP 2GPU)"
+    freeze_filter: ""
+    fsdp_devices: 2
+    mem: 96G
+    cpus: 16
+    train_time: 48:00:00
+
+  - id: lora_default
+    description: "Default LoRA (VLM rank=16, AE rank=32, freeze non-LoRA)"
+    lora_rank_vlm: 16
+    lora_rank_ae: 32

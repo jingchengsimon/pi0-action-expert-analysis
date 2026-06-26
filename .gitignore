@@ -28,3 +28,4 @@ checkpoints/
 *.log
 wandb/
 outputs/
+.qoder/

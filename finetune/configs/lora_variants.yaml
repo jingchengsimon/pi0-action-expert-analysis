@@ -1,0 +1,48 @@
+# LoRA fine-tuning variant configurations.
+# Each variant trains from the pi0_base checkpoint with different LoRA settings.
+
+variants:
+  # --- VLM LoRA only (freeze Action Expert, train VLM LoRA) ---
+  lora_vlm_only:
+    base_config: pi0_libero_low_mem_finetune
+    paligemma_variant: gemma_2b_lora    # rank=16
+    action_expert_variant: gemma_300m    # frozen (no LoRA)
+    description: "LoRA on VLM (gemma_2b) only, Action Expert frozen"
+
+  # --- Action Expert LoRA only (freeze VLM, train AE LoRA) ---
+  lora_ae_only:
+    base_config: pi0_libero_low_mem_finetune
+    paligemma_variant: gemma_2b          # frozen (no LoRA)
+    action_expert_variant: gemma_300m_lora  # rank=32
+    description: "LoRA on Action Expert (gemma_300m) only, VLM frozen"
+
+  # --- Both LoRA (default pi0_libero_low_mem_finetune) ---
+  lora_both:
+    base_config: pi0_libero_low_mem_finetune
+    paligemma_variant: gemma_2b_lora    # rank=16
+    action_expert_variant: gemma_300m_lora  # rank=32
+    description: "LoRA on both VLM and Action Expert (default config)"
+
+  # --- Rank sweep for LoRA on both components ---
+  lora_rank_8:
+    base_config: pi0_libero_low_mem_finetune
+    lora_rank_vlm: 8
+    lora_rank_ae: 16
+    description: "Reduced rank: VLM=8, AE=16"
+
+  lora_rank_32:
+    base_config: pi0_libero_low_mem_finetune
+    lora_rank_vlm: 32
+    lora_rank_ae: 64
+    description: "Increased rank: VLM=32, AE=64"
+
+# Training hyperparameters (shared across variants)
+training:
+  num_steps: 30000
+  batch_size: 32
+  lr_warmup: 1000
+  lr_peak: 2.5e-5
+  lr_decay: 30000
+  lr_decay_value: 2.5e-6
+  save_interval: 5000
+  weight_loader: gs://openpi-assets/checkpoints/pi0_base/params

@@ -1,0 +1,42 @@
+# A1: Action Expert scale ablation.
+# Compare different Action Expert sizes to understand its contribution.
+
+name: a1_expert_scale
+description: >
+  Ablate Action Expert model size (gemma_300m vs smaller variants).
+  The Action Expert uses gemma_300m (width=1024, depth=18) by default.
+  We compare against reduced depth and width configurations.
+
+shared:
+  data_dir: data/libero_lerobot/libero_spatial
+  num_steps: 30000
+  batch_size: 32
+  eval_suites: [libero_spatial, libero_object]
+  config: pi0_libero_low_mem_finetune
+  cpus: 8
+  mem: 48G
+
+variants:
+  - id: ae_default
+    description: "Default gemma_300m Action Expert (width=1024, depth=18)"
+    # No overrides — use default config.
+
+  - id: ae_shallow_9
+    description: "Shallow Action Expert (depth=9, half layers)"
+    env_overrides:
+      OPENPI_AE_DEPTH: 9
+
+  - id: ae_shallow_6
+    description: "Very shallow Action Expert (depth=6)"
+    env_overrides:
+      OPENPI_AE_DEPTH: 6
+
+  - id: ae_narrow_512
+    description: "Narrow Action Expert (width=512)"
+    env_overrides:
+      OPENPI_AE_WIDTH: 512
+
+  - id: ae_narrow_256
+    description: "Very narrow Action Expert (width=256)"
+    env_overrides:
+      OPENPI_AE_WIDTH: 256

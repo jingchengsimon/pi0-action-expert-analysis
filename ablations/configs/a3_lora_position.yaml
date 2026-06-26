@@ -1,0 +1,38 @@
+# A3: LoRA application position ablation.
+# Test where LoRA should be applied (VLM only, AE only, or both).
+
+name: a3_lora_position
+description: >
+  Ablate which components receive LoRA adapters.
+  Tests: VLM-only, AE-only, both (default), and none (full freeze baseline).
+
+shared:
+  data_dir: data/libero_lerobot/libero_spatial
+  num_steps: 30000
+  batch_size: 32
+  eval_suites: [libero_spatial, libero_object]
+  config: pi0_libero_low_mem_finetune
+  cpus: 8
+  mem: 48G
+
+variants:
+  - id: lora_vlm_only
+    description: "LoRA on VLM only (rank=16), AE frozen"
+    lora_rank_vlm: 16
+    lora_rank_ae: 0
+    freeze_filter: action_expert
+
+  - id: lora_ae_only
+    description: "LoRA on AE only (rank=32), VLM frozen"
+    lora_rank_vlm: 0
+    lora_rank_ae: 32
+    freeze_filter: paligemma
+
+  - id: lora_both
+    description: "LoRA on both VLM(16) and AE(32) — default"
+    lora_rank_vlm: 16
+    lora_rank_ae: 32
+
+  - id: freeze_all
+    description: "All frozen except action head (minimal finetuning)"
+    freeze_filter: paligemma,action_expert
