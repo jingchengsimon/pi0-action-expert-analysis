@@ -18,9 +18,6 @@ export BASHRCSOURCED=1
 source ~/.bashrc
 conda activate pi0
 
-# Ensure openpi is installed (editable from submodule)
-pip install -e third_party/openpi --quiet 2>/dev/null || true
-
 # Run the evaluation harness
 cd ~/projects/pi0-action-expert-analysis
 python eval_harness/run_eval.py \

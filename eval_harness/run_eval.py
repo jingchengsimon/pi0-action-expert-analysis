@@ -37,7 +37,7 @@ def _load_yaml(path: str | pathlib.Path) -> dict[str, Any]:
         return yaml.safe_load(f)
 
 
-def _wait_for_server(host: str, port: int, timeout: float = 120.0, interval: float = 2.0) -> bool:
+def _wait_for_server(host: str, port: int, timeout: float = 300.0, interval: float = 2.0) -> bool:
     """Poll the policy server's /healthz endpoint until it responds."""
     import urllib.request
     import urllib.error
@@ -120,15 +120,18 @@ def run_eval_harness(
                 cmd.extend(["--checkpoint", policy_cfg["checkpoint"]])
 
             logger.info("Starting policy server: %s", " ".join(cmd))
+            server_log_path = pathlib.Path(results_dir) / "server.log"
+            server_log_fh = open(server_log_path, "w")
             server_proc = subprocess.Popen(
-                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+                cmd, stdout=server_log_fh, stderr=subprocess.STDOUT,
             )
 
             if not _wait_for_server("127.0.0.1", port):
                 server_proc.kill()
-                stdout_data = server_proc.stdout.read().decode(errors="replace") if server_proc.stdout else ""
-                logger.error("Policy server output:\n%s", stdout_data)
-                raise RuntimeError("Policy server failed to start. See output above.")
+                server_log_fh.close()
+                log_content = server_log_path.read_text(errors="replace")
+                logger.error("Policy server output (see %s):\n%s", server_log_path, log_content)
+                raise RuntimeError(f"Policy server failed to start. See {server_log_path}")
 
         # --- Run evaluations ---
         all_summaries: dict[str, Any] = {"checkpoints": []}
@@ -187,6 +190,8 @@ def run_eval_harness(
             if server_proc.poll() is None:
                 server_proc.kill()
             logger.info("Server stopped.")
+        if 'server_log_fh' in locals() and not server_log_fh.closed:
+            server_log_fh.close()
 
 
 # ---------------------------------------------------------------------------
