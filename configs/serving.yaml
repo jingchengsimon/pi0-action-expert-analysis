@@ -1,29 +1,9 @@
 # Policy server / serving config.
 policy:
-  checkpoint: null        # path or HF id of the pi0 checkpoint
-  model: pi0              # pi0 | pi0-fast | pi0.5 | pi0_libero | pi05_libero
+  checkpoint: null        # path or HF/GCS id of the checkpoint; null = use default for model
+  model: pi05_libero      # pi05_libero is the official LIBERO checkpoint with norm stats
   config_name: null       # explicit training config name (overrides model lookup)
   default_prompt: null    # injected when obs has no "prompt" key
-  device: cuda
-server:
-  host: 0.0.0.0
-  port: 8000
-  action_horizon: 10
-# Policy server / serving config.
-policy:
-  checkpoint: null        # path or HF/GCS id of the checkpoint; null = use default
-  model: pi0              # pi0 | pi0-fast | pi0.5 | pi0_libero | pi05_libero
-  config_name: null       # explicit training config name (overrides model lookup)
-  default_prompt: null    # injected when obs has no "prompt" key
-server:
-  host: 0.0.0.0
-  port: 8000
-  action_horizon: 10
-# Policy server / serving config.
-# TODO: fill in real values.
-policy:
-  checkpoint: null        # path or HF id of the pi0 checkpoint
-  model: pi0              # pi0 | pi0-fast | ...
   device: cuda
 server:
   host: 0.0.0.0

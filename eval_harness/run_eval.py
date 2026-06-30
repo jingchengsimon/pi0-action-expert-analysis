@@ -120,11 +120,15 @@ def run_eval_harness(
                 cmd.extend(["--checkpoint", policy_cfg["checkpoint"]])
 
             logger.info("Starting policy server: %s", " ".join(cmd))
-            server_proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            server_proc = subprocess.Popen(
+                cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
+            )
 
             if not _wait_for_server("127.0.0.1", port):
                 server_proc.kill()
-                raise RuntimeError("Policy server failed to start.")
+                stdout_data = server_proc.stdout.read().decode(errors="replace") if server_proc.stdout else ""
+                logger.error("Policy server output:\n%s", stdout_data)
+                raise RuntimeError("Policy server failed to start. See output above.")
 
         # --- Run evaluations ---
         all_summaries: dict[str, Any] = {"checkpoints": []}
