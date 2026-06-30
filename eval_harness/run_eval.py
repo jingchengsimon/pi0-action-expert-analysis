@@ -134,8 +134,8 @@ def run_eval_harness(
         all_summaries: dict[str, Any] = {"checkpoints": []}
 
         ckpt_list = checkpoints or [
-            {"config": serving_config.get("policy", {}).get("config_name", "default"),
-             "dir": serving_config.get("policy", {}).get("checkpoint", "default")}
+            {"config": serving_config.get("policy", {}).get("config_name") or "default",
+             "dir": serving_config.get("policy", {}).get("checkpoint") or "default"}
         ]
 
         for ckpt in ckpt_list:
