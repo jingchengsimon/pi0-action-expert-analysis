@@ -32,6 +32,7 @@ OUTPUT_DIR="${OUTPUT_DIR:-results/experiments}"
 NUM_STEPS="${NUM_STEPS:-30000}"
 EVAL_SUITES="${EVAL_SUITES:-libero_spatial libero_object}"
 
+export BASHRCSOURCED=1
 source ~/.bashrc
 conda activate pi0
 

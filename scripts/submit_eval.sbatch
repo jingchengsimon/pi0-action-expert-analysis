@@ -14,6 +14,7 @@ module load cuda/12.1
 set -euo pipefail
 
 # Activate environment
+export BASHRCSOURCED=1
 source ~/.bashrc
 conda activate pi0
 

@@ -40,6 +40,7 @@ NUM_GPUS="${NUM_GPUS:-2}"
 
 # --- Environment setup ---
 module load cuda/12.1
+export BASHRCSOURCED=1
 source ~/.bashrc
 conda activate pi0
 

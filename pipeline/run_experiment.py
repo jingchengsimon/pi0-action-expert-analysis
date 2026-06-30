@@ -59,7 +59,7 @@ def _submit_job(
         cmd.append(f"--dependency=afterok:{dependency}")
 
     cmd.append("--wrap")
-    wrap_cmd = f"source ~/.bashrc && conda activate pi0 && python {script}"
+    wrap_cmd = f"export BASHRCSOURCED=1 && source ~/.bashrc && conda activate pi0 && python {script}"
     if extra_args:
         wrap_cmd += " " + " ".join(extra_args)
     cmd.append(wrap_cmd)
@@ -117,7 +117,7 @@ def run_pipeline(
         train_job = _submit_job(
             "finetune/train.py",
             f"{variant}_train",
-            partition="gpu",
+            partition="gpu-redhat",
             gpu=1,
             cpus=8,
             mem="48G",
@@ -156,7 +156,7 @@ def run_pipeline(
             eval_job = _submit_job(
                 "eval_harness/run_eval.py",
                 f"{variant}_eval_{suite}",
-                partition="gpu",
+                partition="gpu-redhat",
                 gpu=1,
                 cpus=8,
                 mem="48G",

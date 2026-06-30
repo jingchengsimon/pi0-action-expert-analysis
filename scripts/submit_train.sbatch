@@ -30,6 +30,7 @@ OUTPUT_DIR="${OUTPUT_DIR:-results/finetune/lora}"
 NUM_STEPS="${NUM_STEPS:-30000}"
 
 module load cuda/12.1
+export BASHRCSOURCED=1
 source ~/.bashrc
 conda activate pi0
 
