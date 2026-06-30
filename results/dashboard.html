@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>pi0 Experiment Dashboard</title>
+<style>
+body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+h1 { color: #333; }
+table { border-collapse: collapse; width: 100%; background: white; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 30px; }
+th, td { border: 1px solid #ddd; padding: 8px 12px; text-align: left; }
+th { background: #4a90d9; color: white; }
+tr:nth-child(even) { background: #f9f9f9; }
+tr:hover { background: #e8f0fe; }
+.summary { margin: 20px 0; padding: 15px; background: white; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+code { background: #f0f0f0; padding: 1px 4px; border-radius: 3px; font-size: 0.9em; }
+</style>
+</head>
+<body>
+<h1>pi0 Experiment Dashboard</h1>
+<div class="summary">
+  <p><strong>Total experiments:</strong> 0</p>
+  <p><strong>Tracked jobs:</strong> 2</p>
+  <p><strong>Generated:</strong> 2026-06-30 00:15:28</p>
+</div>
+
+<h2>Slurm Job Tracker</h2>
+<table>
+<tr><th>Job ID</th><th>Name</th><th>Partition</th><th>Commit</th><th>Status</th><th>Note</th></tr>
+<tr><td><code>57174738</code></td><td>pi0-eval</td><td>gpu-redhat</td><td>6a8c347</td><td><span style="background:#dc3545;color:#fff;padding:2px 8px;border-radius:4px;font-size:0.85em">FAILED</span></td><td>bashrc BASHRCSOURCED unbound variable (fixed in 1b48268)</td></tr>
+<tr><td><code>57611355</code></td><td>pi0-eval</td><td>gpu-redhat</td><td>1b48268</td><td><span style="background:#ffc107;color:#fff;padding:2px 8px;border-radius:4px;font-size:0.85em">PENDING</span></td><td>Resubmitted after BASHRCSOURCED fix; queued behind higher-priority jobs</td></tr>
+</table>
+
+<h2>Evaluation Results</h2>
+<table>
+<tr><th>Source</th><th>Suite</th><th>Success Rate</th><th>Episodes</th></tr>
+<tr><td colspan='4'>No results found</td></tr>
+</table>
+</body>
+</html>
