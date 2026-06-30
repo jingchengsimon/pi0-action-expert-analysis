@@ -18,6 +18,9 @@ export BASHRCSOURCED=1
 source ~/.bashrc
 conda activate pi0
 
+# Add libero to PYTHONPATH (editable install mapping is broken)
+export PYTHONPATH="${PYTHONPATH:+${PYTHONPATH}:}/cache/home/js3269/projects/pi0-action-expert-analysis/third_party/openpi/third_party/libero"
+
 # Run the evaluation harness
 cd ~/projects/pi0-action-expert-analysis
 python eval_harness/run_eval.py \
