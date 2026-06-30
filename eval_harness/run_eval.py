@@ -122,8 +122,10 @@ def run_eval_harness(
             logger.info("Starting policy server: %s", " ".join(cmd))
             server_log_path = pathlib.Path(results_dir) / "server.log"
             server_log_fh = open(server_log_path, "w")
+            server_env = os.environ.copy()
+            server_env["PYTHONUNBUFFERED"] = "1"
             server_proc = subprocess.Popen(
-                cmd, stdout=server_log_fh, stderr=subprocess.STDOUT,
+                cmd, stdout=server_log_fh, stderr=subprocess.STDOUT, env=server_env,
             )
 
             if not _wait_for_server("127.0.0.1", port):
