@@ -6,6 +6,7 @@
 #SBATCH --mem=48G
 #SBATCH --time=08:00:00
 #SBATCH --output=results/slurm-%j.out
+#SBATCH --exclude=gpuk004
 
 # Amarel-specific module loads
 module purge
